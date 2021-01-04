@@ -2,8 +2,6 @@ const fs = require('fs');
 const data = require('./data.json')
 
 exports.post = function (req, res) {
-    //req.query geralm GET------ ?id=
-    //req.body geralm POST
 
     const keys = Object.keys(req.body)
 
@@ -11,14 +9,24 @@ exports.post = function (req, res) {
     for (key of keys) {
     //["avatar_url","name","birth","gender","services"]
     if (req.body[key] == "") 
-        //req.body.key
         return res.send(`Field ${key} is obligatory`)
     }
 
-    req.body.birth = Date.parse(req.body.birth)
-    req.body.created_at = Date.now();
+    let {avatar_url, name, birth, gender, services} = req.body;
 
-    data.instrutores.push(req.body)
+    birth = Date.parse(birth)
+    const created_at = Date.now()
+    const id = Number(data.instrutores.length + 1)
+
+    data.instrutores.push({
+        id,
+        avatar_url,
+        name,
+        birth,
+        gender,
+        services,
+        created_at
+    })
 
 
     //writeFile (path, dado a ser salvo, callback)
