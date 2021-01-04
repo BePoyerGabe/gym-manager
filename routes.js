@@ -1,5 +1,5 @@
 const express = require('express');
-const Instructors = require('./instructors')
+const instructors = require('./instructors')
 const routes = express.Router();
 
 /*
@@ -28,5 +28,7 @@ routes.get('/instrutores/create', (req, res) => {
     res.render('instrutores/create')
 })
 
-routes.post('/instrutores', Instructors.post)
+routes.get('/instrutores/show/:id', instructors.show)
+
+routes.post('/instrutores', instructors.post)
 module.exports = routes

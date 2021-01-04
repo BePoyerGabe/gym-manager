@@ -1,5 +1,25 @@
+const { json } = require('express');
 const fs = require('fs');
 const data = require('./data.json')
+const { age } = require('./assets/age')
+
+exports.show = function (req, res) {
+    const { id } = req.params
+
+    const foundedInstructor = data.instrutores.find(element => element.id == id)
+
+    // if(!foundedInstructor) {
+    //     return res.send('This instructor does nott exist');
+    // }
+    const instructor = {
+        ...foundedInstructor,
+        age: age(foundedInstructor.birth),
+        services: foundedInstructor.services.split(","),
+        created_at: Intl.DateTimeFormat('pt-BR').format(foundedInstructor.created_at)
+    }
+    console.log(instructor)
+    return res.render('instrutores/show', {instructor})
+}
 
 exports.post = function (req, res) {
 
