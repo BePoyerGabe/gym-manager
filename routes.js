@@ -19,16 +19,22 @@ routes.get('/membros', (req, res) => {
     res.send('membros')
 })
 
-
+    /* Primeira página, dados mockados*/ 
 routes.get('/instrutores', (req, res) => {
     res.render('instrutores/index')
 })
 
+/* Rota html para a criação de instrutores */
 routes.get('/instrutores/create', (req, res) => {
     res.render('instrutores/create')
 })
 
+/* Rota criação de intrutores */
+routes.post('/instrutores', instructors.post)
+
+
 routes.get('/instrutores/show/:id', instructors.show)
 
-routes.post('/instrutores', instructors.post)
+routes.get('/instrutores/:id/edit', instructors.edit)
+
 module.exports = routes

@@ -61,3 +61,15 @@ exports.post = function (req, res) {
     // pois a  callback levaria algum tempo para ser executada
     // return res.send(req.body)
 }
+
+exports.edit = function (req, res) {
+    const { id } = req.params
+
+    const foundedInstructor = data.instrutores.find(element => element.id == id)
+
+    if(!foundedInstructor) {
+        return res.send('This instructor does nott exist');
+    }
+
+    res.render('instrutores/edit', {instructor : foundedInstructor})
+}
