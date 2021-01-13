@@ -1,7 +1,7 @@
 const { json } = require('express');
 const fs = require('fs');
 const data = require('./data.json')
-const { age } = require('./assets/age')
+const { age, fullbirthday } = require('./utils/age')
 
 exports.show = function (req, res) {
     const { id } = req.params
@@ -71,5 +71,11 @@ exports.edit = function (req, res) {
         return res.send('This instructor does nott exist');
     }
 
-    res.render('instrutores/edit', {instructor : foundedInstructor})
+    // não manipulando o dado original
+    const instructor = {
+        ...foundedInstructor,
+        birth: fullbirthday(foundedInstructor.birth)
+    } 
+
+    res.render('instrutores/edit', {instructor})
 }

@@ -25,5 +25,21 @@ module.exports = {
        }
 
        return age
+    },
+
+    //método de um obj tbm pode ser escrita assim:
+    fullbirthday(timestamp) {
+        const birthday = new Date(timestamp)
+
+        const year = birthday.getFullYear()
+
+        //slice remove 0 á esquerda quando mês tiver 2 digitos
+        const month = `0${birthday.getUTCMonth() + 1}`.slice(-2)
+
+        const day = `0${birthday.getUTCDate()}`.slice(-2)
+
+        console.log(`${year}-${month}-${day}`)
+
+        return `${year}-${month}-${day}`
     }
 }
