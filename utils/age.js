@@ -38,8 +38,6 @@ module.exports = {
 
         const day = `0${birthday.getUTCDate()}`.slice(-2)
 
-        console.log(`${year}-${month}-${day}`)
-
         return `${year}-${month}-${day}`
     }
 }

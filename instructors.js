@@ -8,16 +8,16 @@ exports.show = function (req, res) {
 
     const foundedInstructor = data.instrutores.find(element => element.id == id)
 
-    // if(!foundedInstructor) {
-    //     return res.send('This instructor does nott exist');
-    // }
+    if(!foundedInstructor) {
+        return res.send('This instructor does not exist');
+    }
     const instructor = {
         ...foundedInstructor,
         age: age(foundedInstructor.birth),
         services: foundedInstructor.services.split(","),
         created_at: Intl.DateTimeFormat('pt-BR').format(foundedInstructor.created_at)
     }
-    console.log(instructor)
+
     return res.render('instrutores/show', {instructor})
 }
 
@@ -68,7 +68,7 @@ exports.edit = function (req, res) {
     const foundedInstructor = data.instrutores.find(element => element.id == id)
 
     if(!foundedInstructor) {
-        return res.send('This instructor does nott exist');
+        return res.send('This instructor does not exist');
     }
 
     // não manipulando o dado original
@@ -78,4 +78,35 @@ exports.edit = function (req, res) {
     } 
 
     res.render('instrutores/edit', {instructor})
+}
+
+exports.put = function (req, res ) {
+    const { id } = req.body
+    let index = 0
+
+    const foundedInstructor = data.instrutores.find((element, indexFind) => {
+        if(element.id == id) {
+            index = indexFind
+            return true
+        }
+    })
+
+    if(!foundedInstructor) {
+        return res.send('This instructor does not exist');
+    }
+
+    const updatedInstructor = {
+        ...foundedInstructor,
+        ...req.body
+    }
+
+    data.instrutores[index] = updatedInstructor
+
+    fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+        if(err) return res.send('Error: '+ err)
+
+        return res.redirect(`/instrutores/show/${id}`)
+    })
+    
+
 }
