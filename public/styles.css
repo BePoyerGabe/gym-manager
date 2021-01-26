@@ -185,6 +185,7 @@ button[type="submit"], a.button {
     padding: 8px 16px;
     margin-top: 32px;
     border: none;
+    outline: none;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
@@ -194,4 +195,15 @@ a.button {
     display: block;
     text-align: center;
     text-decoration: none;
+}
+
+button[type="submit"].btDelete {
+    background-color: rgb(202, 33, 67);
+    margin-top: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    transition: background-color 500ms;
 }

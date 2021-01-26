@@ -39,4 +39,7 @@ routes.get('/instrutores/:id/edit', instructors.edit)
 
 routes.put('/instrutores', instructors.put)
 
+routes.delete('/instrutores', instructors.delete)
+
+
 module.exports = routes

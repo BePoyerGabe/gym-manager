@@ -1,21 +1,31 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
-    <form class="card" method="POST" action="/instrutores?_method=PUT">
-        <section class="avatar" 
+
+<div class="card">
+
+    <section class="avatar" 
         style="background: url({{instructor.avatar_url}}) 
                 no-repeat center center/ cover;">
 
-        </section>
+    </section>
 
-        <section class="details">
+    <section class="details">
+        <form method="POST" action="/instrutores?_method=PUT">
             <h3>Editar Instrutor</h3>
 
             {%include './_form.njk'%}
 
             <!--Input necessário para q seja repassado o ID para a rota put-->
+            <input type="hidden" name="id" value="{{ instructor.id }}">   
+        </form>
+
+        <form method="POST" action="/instrutores?_method=DELETE">
             <input type="hidden" name="id" value="{{ instructor.id }}">
             
-        </section>
-    </form>
+            <button type="submit" class="btDelete">Deletar</button>
+        </form>
+    </section>
+
+</div>
 {% endblock content %}

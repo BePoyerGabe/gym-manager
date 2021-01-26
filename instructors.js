@@ -74,13 +74,14 @@ exports.edit = function (req, res) {
     // não manipulando o dado original
     const instructor = {
         ...foundedInstructor,
-        birth: fullbirthday(foundedInstructor.birth)
+        birth: fullbirthday(foundedInstructor.birth),
+        id: Number(id)
     } 
 
     res.render('instrutores/edit', {instructor})
 }
 
-exports.put = function (req, res ) {
+exports.put = function (req, res) {
     const { id } = req.body
     let index = 0
 
@@ -109,4 +110,24 @@ exports.put = function (req, res ) {
     })
     
 
+}
+
+exports.delete = function (req, res) {
+    const { id } = req.body
+
+    const filteredInstructor = data.instrutores.filter(instructor => {
+        return instructor.id != id
+    })
+
+    if(!filteredInstructor) {
+        return res.send('This instructor does not exist');
+    }
+
+    data.instrutores = filteredInstructor
+
+    fs.writeFile('./data.json', JSON.stringify(data, null, 2), err => {
+        if (err) return res.send('Error: '+ err)
+
+        return res.redirect('/instrutores')
+    })
 }
