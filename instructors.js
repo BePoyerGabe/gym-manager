@@ -3,12 +3,17 @@ const fs = require('fs');
 const data = require('./data.json')
 const { age, fullbirthday } = require('./utils/age')
 
+exports.loadTableInstructors = function (req, res) {
+
+    res.render('instrutores/index.njk', { instructors: data.instrutores })
+
+}
 exports.show = function (req, res) {
     const { id } = req.params
 
     const foundedInstructor = data.instrutores.find(element => element.id == id)
 
-    if(!foundedInstructor) {
+    if (!foundedInstructor) {
         return res.send('This instructor does not exist');
     }
     const instructor = {
@@ -18,7 +23,7 @@ exports.show = function (req, res) {
         created_at: Intl.DateTimeFormat('pt-BR').format(foundedInstructor.created_at)
     }
 
-    return res.render('instrutores/show', {instructor})
+    return res.render('instrutores/show', { instructor })
 }
 
 exports.post = function (req, res) {
@@ -27,12 +32,12 @@ exports.post = function (req, res) {
 
 
     for (key of keys) {
-    //["avatar_url","name","birth","gender","services"]
-    if (req.body[key] == "") 
-        return res.send(`Field ${key} is obligatory`)
+        //["avatar_url","name","birth","gender","services"]
+        if (req.body[key] == "")
+            return res.send(`Field ${key} is obligatory`)
     }
 
-    let {avatar_url, name, birth, gender, services} = req.body;
+    let { avatar_url, name, birth, gender, services } = req.body;
 
     birth = Date.parse(birth)
     const created_at = Date.now()
@@ -52,7 +57,7 @@ exports.post = function (req, res) {
     //writeFile (path, dado a ser salvo, callback)
     // deve usar o JSON pois senão salvaria como OBJECT
     fs.writeFile("data.json", JSON.stringify(data, null, 2), (err) => {
-        if(err) return res.send('Fail to write file')
+        if (err) return res.send('Fail to write file')
 
         return res.redirect('/instrutores')
     })
@@ -67,7 +72,7 @@ exports.edit = function (req, res) {
 
     const foundedInstructor = data.instrutores.find(element => element.id == id)
 
-    if(!foundedInstructor) {
+    if (!foundedInstructor) {
         return res.send('This instructor does not exist');
     }
 
@@ -76,9 +81,9 @@ exports.edit = function (req, res) {
         ...foundedInstructor,
         birth: fullbirthday(foundedInstructor.birth),
         id: Number(id)
-    } 
+    }
 
-    res.render('instrutores/edit', {instructor})
+    res.render('instrutores/edit', { instructor })
 }
 
 exports.put = function (req, res) {
@@ -86,13 +91,13 @@ exports.put = function (req, res) {
     let index = 0
 
     const foundedInstructor = data.instrutores.find((element, indexFind) => {
-        if(element.id == id) {
+        if (element.id == id) {
             index = indexFind
             return true
         }
     })
 
-    if(!foundedInstructor) {
+    if (!foundedInstructor) {
         return res.send('This instructor does not exist');
     }
 
@@ -104,11 +109,11 @@ exports.put = function (req, res) {
     data.instrutores[index] = updatedInstructor
 
     fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
-        if(err) return res.send('Error: '+ err)
+        if (err) return res.send('Error: ' + err)
 
         return res.redirect(`/instrutores/show/${id}`)
     })
-    
+
 
 }
 
@@ -119,14 +124,14 @@ exports.delete = function (req, res) {
         return instructor.id != id
     })
 
-    if(!filteredInstructor) {
+    if (!filteredInstructor) {
         return res.send('This instructor does not exist');
     }
 
     data.instrutores = filteredInstructor
 
     fs.writeFile('./data.json', JSON.stringify(data, null, 2), err => {
-        if (err) return res.send('Error: '+ err)
+        if (err) return res.send('Error: ' + err)
 
         return res.redirect('/instrutores')
     })
