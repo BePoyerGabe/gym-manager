@@ -1,5 +1,5 @@
 module.exports = {
-    age: function(timestamp) {
+    age: function (timestamp) {
         /*Lógica/
         2021 - 1999 = 22
 
@@ -13,18 +13,18 @@ module.exports = {
         15 - 15 = 0
         15 - 31 = -16
         */
-       const today = new Date()
-       const birthday = new Date(timestamp)
+        const today = new Date()
+        const birthday = new Date(timestamp)
 
-       let age = today.getFullYear() - birthday.getFullYear()
-       const month = today.getMonth() - birthday.getMonth()
+        let age = today.getFullYear() - birthday.getFullYear()
+        const month = today.getMonth() - birthday.getMonth()
 
-       //verifica se ainda não fez
-       if(month < 0 || (month == 0 && today.getDate() - birthday.getDate())) {
-           age -= 1
-       }
+        //verifica se ainda não fez
+        if (month < 0 || (month == 0 && today.getDate() - birthday.getDate())) {
+            age -= 1
+        }
 
-       return age
+        return age
     },
 
     //método de um obj tbm pode ser escrita assim:
@@ -38,6 +38,10 @@ module.exports = {
 
         const day = `0${birthday.getUTCDate()}`.slice(-2)
 
-        return `${year}-${month}-${day}`
+        return {
+            iso: `${year}-${month}-${day}`,
+            memberShow: `${day}/${month}`
+
+        }
     }
 }

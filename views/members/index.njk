@@ -1,0 +1,33 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="card tableContainer">
+        <a href="/membros/create" class="newResource">Novo</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                    <tr>
+                        <td>
+                            <span class="memberIcon" style="background-image: url({{ member.avatar_url }});
+                                        background-size: cover;
+                                        background-position: center;"></span>
+                            {{member.name}}
+                        </td>
+                        <td>{{ member.email }}</td>
+                        <td>
+                            <a href="/membros/show/{{member.id}}">Ver</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

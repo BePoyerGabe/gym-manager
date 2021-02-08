@@ -208,6 +208,16 @@ button[type="submit"]:hover {
     transition: background-color 500ms;
 }
 
+.newResource {
+    padding: 6px 12px;
+    margin: 18px 0px 12px 36px;
+    border-radius: 16px;
+    display: inline-block;
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .tableContainer {
     display: block;
 }
@@ -257,7 +267,8 @@ button[type="submit"]:hover {
     color: var(--primary-color);
 }
 
-.tableContainer .instructorIcon {
+.tableContainer .instructorIcon,
+.tableContainer .memberIcon {
     width: 50px;
     height: 50px;
     border-radius: 50px;

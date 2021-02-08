@@ -1,13 +1,13 @@
-const { json } = require('express');
 const fs = require('fs');
-const data = require('./data.json')
-const { age, fullbirthday } = require('./utils/age')
+const data = require('../data.json')
+const { age, fullbirthday } = require('../utils/age')
 
 exports.loadTableInstructors = function (req, res) {
 
-    res.render('instrutores/index.njk', { instructors: data.instrutores })
+    res.render('instructors/index.njk', { instructors: data.instrutores })
 
 }
+
 exports.show = function (req, res) {
     const { id } = req.params
 
@@ -23,7 +23,7 @@ exports.show = function (req, res) {
         created_at: Intl.DateTimeFormat('pt-BR').format(foundedInstructor.created_at)
     }
 
-    return res.render('instrutores/show', { instructor })
+    return res.render('instructors/show', { instructor })
 }
 
 exports.post = function (req, res) {
@@ -79,11 +79,11 @@ exports.edit = function (req, res) {
     // não manipulando o dado original
     const instructor = {
         ...foundedInstructor,
-        birth: fullbirthday(foundedInstructor.birth),
+        birth: fullbirthday(foundedInstructor.birth).iso,
         id: Number(id)
     }
 
-    res.render('instrutores/edit', { instructor })
+    res.render('instructors/edit', { instructor })
 }
 
 exports.put = function (req, res) {
