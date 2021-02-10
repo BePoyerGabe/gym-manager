@@ -17,12 +17,15 @@
                 <input type="hidden" name="id" value="{{ member.id }}">
             </form>
 
-            <form method="POST" action="/membros?_method=DELETE">
+            <form id="form-delete" method="POST" action="/membros?_method=DELETE">
                 <input type="hidden" name="id" value="{{ member.id }}">
 
                 <button type="submit" class="btDelete">Deletar</button>
             </form>
         </section>
 
+        <script src='/deleteConfirmation.js'></script>
+
     </div>
+
 {% endblock content %}

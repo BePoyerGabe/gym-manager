@@ -2,30 +2,29 @@
 
 {% block content %}
 
-<div class="card">
+    <div class="card">
 
-    <section class="avatar" 
-        style="background: url({{instructor.avatar_url}}) 
-                no-repeat center center/ cover;">
+        <section class="avatar" style="background: url({{instructor.avatar_url}})
+                no-repeat center center/ cover;"></section>
 
-    </section>
+        <section class="details">
+            <form method="POST" action="/instrutores?_method=PUT">
+                <h3>Editar Instrutor</h3>
 
-    <section class="details">
-        <form method="POST" action="/instrutores?_method=PUT">
-            <h3>Editar Instrutor</h3>
+                {%include './_form.njk'%}
 
-            {%include './_form.njk'%}
+                <!--Input necessário para q seja repassado o ID para a rota put-->
+                <input type="hidden" name="id" value="{{ instructor.id }}">
+            </form>
 
-            <!--Input necessário para q seja repassado o ID para a rota put-->
-            <input type="hidden" name="id" value="{{ instructor.id }}">   
-        </form>
+            <form id="form-delete" method="POST" action="/instrutores?_method=DELETE">
+                <input type="hidden" name="id" value="{{ instructor.id }}">
 
-        <form method="POST" action="/instrutores?_method=DELETE">
-            <input type="hidden" name="id" value="{{ instructor.id }}">
-            
-            <button type="submit" class="btDelete">Deletar</button>
-        </form>
-    </section>
+                <button type="submit" class="btDelete">Deletar</button>
+            </form>
+        </section>
 
-</div>
+        <script src='/deleteConfirmation.js'></script>
+
+    </div>
 {% endblock content %}
