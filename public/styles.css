@@ -240,6 +240,7 @@ button[type="submit"]:hover {
 .tableContainer tbody tr td {
     padding: 15px 0;
     border-top: 2px solid coral;
+    text-align: center;
 }
 
 .tableContainer tbody tr:first-child td {
@@ -253,10 +254,6 @@ button[type="submit"]:hover {
     text-transform: capitalize;
     
     
-}
-
-.tableContainer tbody tr td:last-child {
-    text-align: center;
 }
 
 .tableContainer tbody tr td:last-child a {

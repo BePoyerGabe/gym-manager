@@ -120,21 +120,21 @@ exports.put = function (req, res) {
 }
 
 exports.delete = function (req, res) {
-    // const { id } = req.body
+    const { id } = req.body
 
-    // const filteredMember = data.membros.filter(member => {
-    //     return member.id != id
-    // })
+    const filteredMember = data.membros.filter(member => {
+        return member.id != id
+    })
 
-    // if (!filteredMember) {
-    //     return res.send('This member does not exist');
-    // }
+    if (!filteredMember) {
+        return res.send('This member does not exist');
+    }
 
-    // data.membros = filteredMember
+    data.membros = filteredMember
 
-    // fs.writeFile('./data.json', JSON.stringify(data, null, 2), err => {
-    //     if (err) return res.send('Error: ' + err)
+    fs.writeFile('./data.json', JSON.stringify(data, null, 2), err => {
+        if (err) return res.send('Error: ' + err)
 
-    return res.redirect('/membros')
-    //})
+        return res.redirect('/membros')
+    })
 }
