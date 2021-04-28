@@ -24,15 +24,11 @@ routes.get("/", (req, res) => {
   res.redirect("/instrutores");
 });
 routes.get("/instrutores", instructors.index);
-routes.post("/instrutores", instructors.post); //Rota criação de intrutores
+routes.get("/instrutores/create", instructors.create);
 routes.get("/instrutores/show/:id", instructors.show);
 routes.get("/instrutores/:id/edit", instructors.edit);
+routes.post("/instrutores", instructors.post); //Rota criação de intrutores
 routes.put("/instrutores", instructors.put);
 routes.delete("/instrutores", instructors.delete);
-
-routes.get("/instrutores/create", (req, res) => {
-  //Rota html para a criação de instrutores
-  res.render("instructors/create");
-});
 
 module.exports = routes;

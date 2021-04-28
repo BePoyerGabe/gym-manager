@@ -1,15 +1,26 @@
 const { age, fullbirthday } = require("../../lib/age");
+const Instructor = require("../models/instructor");
 
 module.exports = {
   index(req, res) {
-    return;
+    Instructor.all((instructors) => {
+      res.render(`instructors/index.njk`, { instructors });
+    });
   },
+
+  create(req, res) {
+    //Rota html para a criação de instrutores
+    res.render("instructors/create.njk");
+  },
+
   show(req, res) {
-    return;
+    res.render("instructors/show.njk");
   },
+
   edit(req, res) {
-    return;
+    res.render("instructors/edit.njk");
   },
+
   post(req, res) {
     const keys = Object.keys(req.body);
 
@@ -18,17 +29,20 @@ module.exports = {
       if (req.body[key] == "") return res.send(`Field ${key} is obligatory`);
     }
 
-    let { avatar_url, name, birth, gender, services } = req.body;
+    const instructorToInsert = [
+      req.body.name,
+      req.body.avatar_url,
+      req.body.gender,
+      req.body.services,
+      fullbirthday(req.body.birth).iso,
+      fullbirthday(Date.now()).iso,
+    ];
 
-    return;
-
-    //writeFile (path, dado a ser salvo, callback)
-    // deve usar o JSON pois senão salvaria como OBJECT
-
-    // com a linha abaixo, ele enviaria para instrutores porém mostraria o req.body
-    // pois a  callback levaria algum tempo para ser executada
-    // return res.send(req.body)
+    Instructor.create(instructorToInsert, (createdInstructorId) => {
+      res.redirect(`/instrutores/show/${createdInstructorId}`);
+    });
   },
+
   put(req, res) {
     const keys = Object.keys(req.body);
 
@@ -39,6 +53,7 @@ module.exports = {
 
     return;
   },
+
   delete(req, res) {
     return;
   },
