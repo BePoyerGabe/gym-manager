@@ -41,6 +41,7 @@ module.exports = {
     return {
       iso: `${year}-${month}-${day}`,
       memberShow: `${day}/${month}`,
+      ptFormat: `${day}/${month}/${year}`,
     };
   },
 };

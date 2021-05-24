@@ -5,6 +5,8 @@ const routes = require("./routes");
 
 const server = express();
 
+require("dotenv").config();
+
 // use é um middleware, antes da iniciação e depois da instanciação, palavra lembra meio
 
 server.use(

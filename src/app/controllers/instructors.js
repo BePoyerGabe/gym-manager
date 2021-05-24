@@ -4,7 +4,7 @@ const Instructor = require("../models/instructor");
 module.exports = {
   index(req, res) {
     Instructor.all((instructors) => {
-      res.render(`instructors/index.njk`, { instructors });
+      return res.render(`instructors/index.njk`, { instructors });
     });
   },
 
@@ -14,11 +14,27 @@ module.exports = {
   },
 
   show(req, res) {
-    res.render("instructors/show.njk");
+    Instructor.find(req.params.id, (instructor) => {
+      if (!instructor) return res.send("Not found this instructor");
+
+      instructor.age = age(instructor.birth);
+      instructor.services = instructor.services.split(",");
+      instructor.created_at = fullbirthday(instructor.created_at).ptFormat;
+
+      return res.render("instructors/show.njk", { instructor });
+    });
   },
 
   edit(req, res) {
-    res.render("instructors/edit.njk");
+    Instructor.find(req.params.id, (instructor) => {
+      if (!instructor) return res.send("Not found this instructor");
+
+      instructor.birth = fullbirthday(instructor.birth).iso;
+      instructor.services = instructor.services.split(",");
+      instructor.created_at = fullbirthday(instructor.created_at).ptFormat;
+
+      return res.render("instructors/edit.njk", { instructor });
+    });
   },
 
   post(req, res) {
@@ -51,10 +67,14 @@ module.exports = {
       if (req.body[key] == "") return res.send(`Field ${key} is obligatory`);
     }
 
-    return;
+    Instructor.update(req.body, () => {
+      return res.redirect(`instrutores/show/${req.body.id}`);
+    });
   },
 
   delete(req, res) {
-    return;
+    Instructor.delete(req.body.id, () => {
+      return res.redirect(`/instrutores`);
+    });
   },
 };
