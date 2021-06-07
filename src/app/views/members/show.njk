@@ -1,34 +1,28 @@
 {% extends 'layout.njk' %}
-
 {% block content %}
     <div class="card">
-        <section class="avatar" style="background: url({{ member.avatar_url }})
-               no-repeat center center/ cover;"></section>
-
+        <section
+            class="avatar"
+            style="background: url({{ member.avatar_url }})
+                               no-repeat center center/ cover;"></section>
         <section class="details">
-
             <h3>Detalhes</h3>
-
             <div class="item">
                 <div>Membro</div>
-                <div>{{member.name}}</div>
+                <div>{{ member.name }}</div>
             </div>
-
             <div class="item">
                 <div>Email</div>
-                <div>{{member.email}}</div>
+                <div>{{ member.email }}</div>
             </div>
-
             <div class="item">
                 <div>Aniversário</div>
-                <div>{{member.birthday}}</div>
+                <div>{{ member.birth }}</div>
             </div>
-
             <div class="item">
                 <div>Sexo</div>
-                <div>{{"Masculino" if member.gender == "M" else "Feminino"}}</div>
+                <div>{{ "Masculino" if member.gender == "M" else "Feminino" }}</div>
             </div>
-
             <div class="item">
                 <div>Tipo sanguíneo</div>
                 <div>
@@ -40,28 +34,17 @@
                     {% if member.blood == "AB0" %}AB-{% endif %}
                     {% if member.blood == "O1" %}O+{% endif %}
                     {% if member.blood == "O0" %}O-{% endif %}
-
                 </div>
             </div>
-
             <div class="item">
                 <div>Peso (Kg)</div>
-                <div>{{member.weight}}</div>
+                <div>{{ member.weight }}</div>
             </div>
-
             <div class="item">
                 <div>Altura (cm)</div>
-                <div>{{member.height}}</div>
+                <div>{{ member.height }}</div>
             </div>
-
-            <div class="item">
-                <div>Desde (mm/dd/aaaa)</div>
-                <div>{{member.created_at}}</div>
-            </div>
-
             <a href="/membros/{{ member.id }}/edit" class="button">Editar</a>
-
         </section>
     </div>
-
 {% endblock content %}

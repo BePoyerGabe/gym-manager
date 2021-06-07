@@ -2,7 +2,7 @@ const db = require("../../config/database");
 
 module.exports = {
   all(callback) {
-    db.query(`SELECT * FROM instructors`, (err, results) => {
+    db.query(`SELECT * FROM instructors ORDER BY name ASC`, (err, results) => {
       callback(results.rows);
     });
   },
