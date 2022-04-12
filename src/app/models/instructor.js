@@ -2,9 +2,20 @@ const db = require("../../config/database");
 
 module.exports = {
   all(callback) {
-    db.query(`SELECT * FROM instructors ORDER BY name ASC`, (err, results) => {
-      callback(results.rows);
-    });
+    db.query(
+      `
+      SELECT instructors.*, count(members) AS total_students 
+      FROM instructors 
+      LEFT JOIN members ON (members.instructor_id = instructors.id)
+      GROUP BY instructors.id
+      ORDER BY total_students DESC
+    `,
+      (err, results) => {
+        if (err) throw new Error("Erro ao buscar instrutores ", err);
+
+        callback(results.rows);
+      }
+    );
   },
 
   create(data, callback) {
@@ -70,4 +81,56 @@ module.exports = {
       }
     );
   },
+
+  findFilter(filtro, callback) {
+    db.query(
+      `SELECT instructors.*, count(members) AS total_students 
+      FROM instructors 
+      LEFT JOIN members ON (members.instructor_id = instructors.id)
+      WHERE instructors.name ILIKE '%${filtro}%'
+      OR
+      instructors.services ILIKE '%${filtro}%'  
+      GROUP BY instructors.id
+      ORDER BY total_students DESC`, 
+      (err, result) => {
+        if (err) throw new Error(`Database error: ${err}`)
+
+        callback(result.rows)
+    })
+  },
+
+  paginate(params) {
+    const { filter, limit, offset, callback } = params
+
+    let query = '',
+        filterQuery = '',
+        totalQuery = `( SELECT count(*) FROM instructors
+        ) AS total`
+
+    if(filter) {
+      filterQuery = `
+        WHERE instructors.name ILIKE '%${filter}%'
+        OR instructors.services ILIKE '%${filter}%'
+        `
+      
+        totalQuery = `( SELECT count(*) FROM instructors
+        ${filterQuery}
+        ) AS total`
+    }
+
+    query = `
+    SELECT instructors.*, ${totalQuery}, count(members) as total_students 
+    FROM instructors
+    LEFT JOIN members ON (instructors.id = members.instructor_id)
+    ${filterQuery}
+    GROUP BY instructors.id LIMIT $1 OFFSET $2
+
+    `
+
+    db.query(query, [limit, offset], (err, result) => {
+        if (err) throw new Error(`Database error: ${err}`)
+
+        callback(result.rows)
+    })
+  }
 };

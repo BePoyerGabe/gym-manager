@@ -1,32 +1,42 @@
 {% extends 'layout.njk' %}
 {% block content %}
     <div class="card tableContainer">
-        <a href="/instrutores/create" class="newResource">Novo</a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Acompanhamento</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for instructor in instructors %}
+        <div class="header">
+            <a class="button" href="/instrutores/create" class="newResource">Novo</a>
+            <form action="/instrutores" method="GET">
+                <input type="text" name="filter" placeholder="Filtrar por nome">
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            <span
-                                class="instructorIcon"
-                                style="background-image: url({{ instructor.avatar_url }}); background-size: cover;
-                                    background-position: center;"></span>
-                            {{ instructor.name }}
-                        </td>
-                        <td>{{ instructor.services }}</td>
-                        <td>
-                            <a href="/instrutores/show/{{ instructor.id }}">Ver</a>
-                        </td>
+                        <th>Nome</th>
+                        <th>Acompanhamento</th>
+                        <th>Total de alunos</th>
+                        <th>Ação</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for instructor in instructors %}
+                        <tr>
+                            <td>
+                                <span
+                                    class="instructorIcon"
+                                    style="background-image: url({{ instructor.avatar_url }}); background-size: cover;
+                                        background-position: center;"></span>
+                                {{ instructor.name }}
+                            </td>
+                            <td>{{ instructor.services }}</td>
+                            <td>{{ instructor.total_students }}</td>
+                            <td>
+                                <a href="/instrutores/show/{{ instructor.id }}">Ver</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination" data-page={{ pagination.page }} data-total={{ pagination.total }} data-filter={{ pagination.filter }}></div>
+        </div>
     </div>
 {% endblock content %}

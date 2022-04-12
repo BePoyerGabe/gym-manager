@@ -11,7 +11,10 @@ module.exports = {
 
   create(req, res) {
     //Rota html para a criação de instrutores
-    res.render("members/create.njk");
+    Member.instructorSelect((instructors) => {
+      console.log("teste", instructors)
+      return res.render("members/create.njk", { instructors });
+    });
   },
 
   show(req, res) {
@@ -30,7 +33,11 @@ module.exports = {
 
       member.birth = fullbirthday(member.birth).iso;
 
-      return res.render("members/edit.njk", { member });
+      Member.instructorSelect((instructors) => {
+        console.log("teste", instructors)
+        return res.render("members/edit.njk", { member, instructors });
+      });
+
     });
   },
 
@@ -51,6 +58,7 @@ module.exports = {
       req.body.blood,
       req.body.weight,
       req.body.height,
+      req.body.instructor_id
     ];
 
     Member.create(memberToInsert, (createdMemberId) => {

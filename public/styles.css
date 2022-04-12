@@ -178,7 +178,7 @@ input[type="radio"] {
     margin-right: 4px;
 }
 
-button[type="submit"], a.button {
+button[type="submit"], a.button, .button {
     width: 100%;
     background-color: var(--primary-color);
     color: white;
@@ -220,6 +220,7 @@ button[type="submit"]:hover {
 
 .tableContainer {
     display: block;
+    overflow: auto;
 }
 
 .tableContainer table{
@@ -274,9 +275,56 @@ button[type="submit"]:hover {
 }
 
 
+/*   Filters   */
+.tableContainer .header {
+    margin: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 16px;
+}
 
+.tableContainer .header a {
+    width: 50%;
+}
 
+.tableContainer .header a,
+.tableContainer .header form button{
+    margin: 0;
+}
 
+.tableContainer .header form {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    align-items: center;
 
+}
 
+/* Pagination */
 
+.tableContainer {
+    display: grid;
+    grid-template: 64px 1fr 16px / 1fr;
+}
+
+.tableContainer .header {
+    margin: 0;
+    align-self: start;
+}
+
+.tableContainer .pagination {
+    margin: 0;
+    align-self: end;
+    justify-self: center;
+}
+
+.pagination a, .pagination span {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 16px;
+}
+
+.pagination a:hover {
+    filter: brightness(0.3);
+    border-bottom: 1px solid var(--primary-color);
+}

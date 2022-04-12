@@ -15,10 +15,7 @@ routes.get("/membros/show/:id", members.show);
 routes.get("/membros/:id/edit", members.edit);
 routes.put("/membros", members.put);
 routes.delete("/membros", members.delete);
-routes.get("/membros/create", (req, res) => {
-  //Rota html para a criação de instrutores
-  res.render("members/create");
-});
+routes.get("/membros/create", members.create);
 
 routes.get("/", (req, res) => {
   res.redirect("/instrutores");

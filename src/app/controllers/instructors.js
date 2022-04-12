@@ -3,9 +3,29 @@ const Instructor = require("../models/instructor");
 
 module.exports = {
   index(req, res) {
-    Instructor.all((instructors) => {
-      return res.render(`instructors/index.njk`, { instructors });
-    });
+    let { filter, page, limit } = req.query
+
+    page = page || 1
+    limit = limit || 2
+
+    let offset = limit * (page - 1)
+    const params = {
+      filter,
+      page,
+      limit,
+      offset,
+      callback(instructors) {
+        const pagination = {
+          total: Math.ceil(instructors[0].total / limit),
+          page
+        }
+        
+        return res.render(`instructors/index.njk`, { instructors, filter, pagination });
+      }
+    }
+
+    Instructor.paginate(params)
+
   },
 
   create(req, res) {
